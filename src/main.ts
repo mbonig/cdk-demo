@@ -1,4 +1,5 @@
 import { App } from '@aws-cdk/core';
+import { DatabaseStack } from './DatabaseStack';
 import { VpcStack } from './VpcStack';
 
 // for development, use account/region from cdk cli
@@ -9,7 +10,12 @@ const devEnv = {
 
 const app = new App();
 
-new VpcStack(app, 'vpc', { env: devEnv });
+const vpcStack = new VpcStack(app, 'vpc', { env: devEnv });
+
+new DatabaseStack(app, 'backend', {
+  env: devEnv,
+  vpc: vpcStack.vpc,
+});
 // new MyStack(app, 'my-stack-prod', { env: prodEnv });
 
 app.synth();
