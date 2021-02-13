@@ -3,6 +3,9 @@ import { DatabaseInstance, DatabaseInstanceEngine, MysqlEngineVersion } from '@a
 import { Construct, Stack, StackProps } from '@aws-cdk/core';
 
 interface DatabaseStackProps extends StackProps {
+  /**
+   * The VPC that the application should run in.
+   */
   vpc: Vpc;
 }
 

@@ -1,16 +1,19 @@
 const { AwsCdkTypeScriptApp } = require('projen');
 
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: '1.88.0',
+  cdkVersion: '1.85.0',
+  cdkVersionPinning: true,
   defaultReleaseBranch: 'main',
   jsiiFqn: 'mbonig.CdkDemo',
   name: 'cdk-demo',
   cdkDependencies: [
+    '@aws-cdk/aws-autoscaling',
     '@aws-cdk/aws-ec2',
     '@aws-cdk/aws-rds',
   ],
   deps: [
     'eslint',
+    '@matthewbonig/rds-tools',
   ],
 
   /* AwsCdkTypeScriptAppOptions */

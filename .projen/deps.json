@@ -21,7 +21,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^1.88.0",
+      "version": "1.85.0",
       "type": "build"
     },
     {
@@ -78,22 +78,31 @@
     },
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.88.0",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-autoscaling",
+      "version": "1.85.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-ec2",
-      "version": "^1.88.0",
+      "version": "1.85.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-rds",
-      "version": "^1.88.0",
+      "version": "1.85.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.88.0",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@matthewbonig/rds-tools",
       "type": "runtime"
     },
     {
