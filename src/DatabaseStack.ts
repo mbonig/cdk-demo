@@ -27,23 +27,12 @@ export class DatabaseStack extends Stack {
       databases: ['somedatabase'],
     });
 
-    new DatabaseUser(this, 'julie-account', {
-      databaseInstance: this.databaseInstance,
-      username: 'julie',
-      databases: ['somedatabase'],
-    });
-
-    new DatabaseUser(this, 'sriram-account', {
-      databaseInstance: this.databaseInstance,
-      username: 'sriram',
-      databases: ['somedatabase'],
-    });
-
-    new DatabaseUser(this, 'steve-account', {
-      databaseInstance: this.databaseInstance,
-      username: 'steve',
-      databases: ['somedatabase'],
-    });
-
+    for (const username of ['julie', 'sriram', 'steve']) {
+      new DatabaseUser(this, `${username}-account`, {
+        databaseInstance: this.databaseInstance,
+        username: username,
+        databases: ['somedatabase'],
+      });
+    }
   }
 }
