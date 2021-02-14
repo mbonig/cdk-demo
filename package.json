@@ -45,7 +45,8 @@
     "@aws-cdk/aws-ec2": "1.85.0",
     "@aws-cdk/aws-rds": "1.85.0",
     "@aws-cdk/core": "1.85.0",
-    "@matthewbonig/rds-tools": "0.0.5",
+    "@matthewbonig/rds-tools": "0.0.6",
+    "esbuild": "^0.8.45",
     "eslint": "^7.19.0"
   },
   "bundledDependencies": [],

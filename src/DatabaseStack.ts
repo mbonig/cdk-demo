@@ -5,6 +5,10 @@ import { DatabaseUser } from '@matthewbonig/rds-tools';
 
 interface DatabaseStackProps extends StackProps {
   /**
+   * Usernames to create against the sql database.
+   */
+  usernames: string[];
+  /**
    * The VPC that the application should run in.
    */
   vpc: Vpc;
@@ -27,7 +31,7 @@ export class DatabaseStack extends Stack {
       databases: ['somedatabase'],
     });
 
-    for (const username of ['julie', 'sriram', 'steve']) {
+    for (const username of props.usernames) {
       new DatabaseUser(this, `${username}-account`, {
         databaseInstance: this.databaseInstance,
         username: username,

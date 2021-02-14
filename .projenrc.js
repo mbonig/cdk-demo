@@ -13,6 +13,7 @@ const project = new AwsCdkTypeScriptApp({
   ],
   deps: [
     'eslint',
+    'esbuild',
     '@matthewbonig/rds-tools',
   ],
 

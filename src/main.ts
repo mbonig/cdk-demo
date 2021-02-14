@@ -16,6 +16,7 @@ const vpcStack = new VpcStack(app, 'vpc', { env });
 const databaseStack = new DatabaseStack(app, 'backend', {
   env,
   vpc: vpcStack.vpc,
+  usernames: ['julie', 'sriram', 'steve'],
 });
 
 new AppStack(app, 'frontend', {
