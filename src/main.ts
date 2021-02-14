@@ -3,26 +3,39 @@ import { AppStack } from './AppStack';
 import { DatabaseStack } from './DatabaseStack';
 import { VpcStack } from './VpcStack';
 
+const AWS = require('aws-sdk');
+const ddb = new AWS.DynamoDB.DocumentClient();
+
 // for development, use account/region from cdk cli
 const env = {
   account: process.env.CDK_DEFAULT_ACCOUNT,
   region: process.env.CDK_DEFAULT_REGION,
 };
 
-const app = new App();
+async function getUsernames() {
+  const { Items: users } = await ddb.scan({ TableName: 'sql-users' }).promise();
+  return users.map((x: { username: string }) => x.username);
+}
 
-const vpcStack = new VpcStack(app, 'vpc', { env });
+(async () => {
 
-const databaseStack = new DatabaseStack(app, 'backend', {
-  env,
-  vpc: vpcStack.vpc,
-  usernames: ['julie', 'sriram', 'steve'],
-});
+  const usernames = await getUsernames();
+  const app = new App();
 
-new AppStack(app, 'frontend', {
-  env,
-  vpc: vpcStack.vpc,
-  databaseInstance: databaseStack.databaseInstance,
-});
+  const vpcStack = new VpcStack(app, 'vpc', { env });
 
-app.synth();
+  const databaseStack = new DatabaseStack(app, 'backend', {
+    env,
+    vpc: vpcStack.vpc,
+    usernames,
+  });
+
+  new AppStack(app, 'frontend', {
+    env,
+    vpc: vpcStack.vpc,
+    databaseInstance: databaseStack.databaseInstance,
+  });
+
+  app.synth();
+
+})();
