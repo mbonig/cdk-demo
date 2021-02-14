@@ -26,5 +26,24 @@ export class DatabaseStack extends Stack {
       username: 'app',
       databases: ['somedatabase'],
     });
+
+    new DatabaseUser(this, 'julie-account', {
+      databaseInstance: this.databaseInstance,
+      username: 'julie',
+      databases: ['somedatabase'],
+    });
+
+    new DatabaseUser(this, 'sriram-account', {
+      databaseInstance: this.databaseInstance,
+      username: 'sriram',
+      databases: ['somedatabase'],
+    });
+
+    new DatabaseUser(this, 'steve-account', {
+      databaseInstance: this.databaseInstance,
+      username: 'steve',
+      databases: ['somedatabase'],
+    });
+
   }
 }
