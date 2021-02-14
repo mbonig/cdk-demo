@@ -87,6 +87,16 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/aws-codepipeline-actions",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-codepipeline",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-ec2",
       "version": "1.85.0",
       "type": "runtime"
@@ -102,7 +112,16 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/pipelines",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
       "name": "@matthewbonig/rds-tools",
+      "type": "runtime"
+    },
+    {
+      "name": "aws-sdk",
       "type": "runtime"
     },
     {

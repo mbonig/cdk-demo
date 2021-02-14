@@ -8,15 +8,21 @@ const project = new AwsCdkTypeScriptApp({
   name: 'cdk-demo',
   cdkDependencies: [
     '@aws-cdk/aws-autoscaling',
+    '@aws-cdk/aws-codepipeline',
+    '@aws-cdk/aws-codepipeline-actions',
     '@aws-cdk/aws-ec2',
     '@aws-cdk/aws-rds',
+    '@aws-cdk/pipelines',
   ],
   deps: [
+    'aws-sdk',
     'eslint',
     'esbuild',
     '@matthewbonig/rds-tools',
   ],
-
+  context: {
+    '@aws-cdk/core:newStyleStackSynthesis': true,
+  },
   /* AwsCdkTypeScriptAppOptions */
   // appEntrypoint: 'main.ts',                                                 /* The CDK app's entrypoint (relative to the source directory, which is "src" by default). */
   // cdkDependencies: undefined,                                               /* Which AWS CDK modules (those that start with "@aws-cdk/") this app uses. */
