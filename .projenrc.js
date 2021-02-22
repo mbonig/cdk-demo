@@ -8,9 +8,13 @@ const project = new AwsCdkTypeScriptApp({
   name: 'cdk-demo',
   cdkDependencies: [
     '@aws-cdk/aws-autoscaling',
+    '@aws-cdk/aws-apigatewayv2',
+    '@aws-cdk/aws-apigatewayv2-integrations',
     '@aws-cdk/aws-codepipeline',
     '@aws-cdk/aws-codepipeline-actions',
     '@aws-cdk/aws-ec2',
+    '@aws-cdk/aws-lambda',
+    '@aws-cdk/aws-lambda-nodejs',
     '@aws-cdk/aws-rds',
     '@aws-cdk/pipelines',
   ],
@@ -126,5 +130,7 @@ const project = new AwsCdkTypeScriptApp({
   // tsconfig: undefined,                                                      /* Custom TSConfig. */
   // typescriptVersion: '^3.9.5',                                              /* TypeScript version to use. */
 });
+
+project.tsconfig.include.push('apis/**/*.ts');
 
 project.synth();

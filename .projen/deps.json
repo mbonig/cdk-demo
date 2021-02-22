@@ -82,6 +82,16 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/aws-apigatewayv2-integrations",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-apigatewayv2",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-autoscaling",
       "version": "1.85.0",
       "type": "runtime"
@@ -98,6 +108,16 @@
     },
     {
       "name": "@aws-cdk/aws-ec2",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda-nodejs",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda",
       "version": "1.85.0",
       "type": "runtime"
     },

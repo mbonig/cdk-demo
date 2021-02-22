@@ -26,7 +26,8 @@
     "target": "ES2018"
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "apis/**/*.ts"
   ],
   "exclude": [
     "node_modules",
