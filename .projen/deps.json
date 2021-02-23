@@ -97,6 +97,11 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/aws-cloudwatch",
+      "version": "1.85.0",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-codepipeline-actions",
       "version": "1.85.0",
       "type": "runtime"

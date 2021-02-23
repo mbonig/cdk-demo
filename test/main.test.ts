@@ -1,9 +1,9 @@
 import '@aws-cdk/assert/jest';
 import * as path from 'path';
-import { HttpMethod } from '@aws-cdk/aws-apigatewayv2';
-import { App } from '@aws-cdk/core';
-// @ts-ignore
-import { getFiles } from '../src/utils';
+import { Dashboard } from '@aws-cdk/aws-cloudwatch';
+import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
+import { App, Stack } from '@aws-cdk/core';
+import { LambdaMetrics } from '../src/LambdaMetrics';
 import { VpcStack } from '../src/VpcStack';
 
 test('Snapshot', () => {
@@ -16,21 +16,16 @@ test('Snapshot', () => {
 test('whatever', async () => {
 
 
-  for (const file of await getFiles('apis')) {
+  const app = new App();
+  const stack = new Stack(app, 'customer-stack', {});
 
-    const pathParts = file.split(path.sep);
-    const filename = pathParts[pathParts.length - 1];
-    const routePath = file.replace(path.join(__dirname, '..', 'apis'), '').replace(filename, '').replace(path.sep, '/');
-    const routePathParts = routePath.split(path.sep).filter((x: string) => !!x);
-    const method = routePath === '/' ? HttpMethod.ANY : routePathParts[1] as HttpMethod;
-
-    const route = {
-      methods: [method],
-      path: `/${routePathParts[0] || ''}`,
-      entry: file,
-    };
-
-    console.log({ route });
+  for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+    new NodejsFunction(stack, `lambda-${i}`, { entry: path.join(__dirname, 'fake-handler.ts') });
   }
+
+  const dashboard = new Dashboard(stack, 'dashboard', {});
+
+  new LambdaMetrics(stack, 'lambda-metrics', { dashboard });
+
 
 });
