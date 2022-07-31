@@ -9,6 +9,309 @@ Object {
       "Type": "AWS::SSM::Parameter::Value<String>",
     },
   },
+  "Resources": Object {
+    "LambdaMediaConvertRole796170D0": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "mediaconvert.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "LambdaMediaConvertRoleDefaultPolicyDFE4A600": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "MediaA721A567",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "MediaA721A567",
+                          "Arn",
+                        ],
+                      },
+                      "/uploads/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": Array [
+                "s3:DeleteObject*",
+                "s3:PutObject",
+                "s3:PutObjectLegalHold",
+                "s3:PutObjectRetention",
+                "s3:PutObjectTagging",
+                "s3:PutObjectVersionTagging",
+                "s3:Abort*",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "MediaA721A567",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "MediaA721A567",
+                          "Arn",
+                        ],
+                      },
+                      "/converted/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "LambdaMediaConvertRoleDefaultPolicyDFE4A600",
+        "Roles": Array [
+          Object {
+            "Ref": "LambdaMediaConvertRole796170D0",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "LambdaSourceBucketTrigger6C3DDFBE": Object {
+      "Properties": Object {
+        "EventPattern": Object {
+          "detail": Object {
+            "bucket": Object {
+              "name": Array [
+                Object {
+                  "Ref": "MediaA721A567",
+                },
+              ],
+            },
+            "object": Object {
+              "key": Array [
+                Object {
+                  "prefix": "uploads/",
+                },
+              ],
+            },
+          },
+          "detail-type": Array [
+            "Object Created",
+          ],
+          "source": Array [
+            "aws.s3",
+          ],
+        },
+        "State": "ENABLED",
+        "Targets": Array [
+          Object {
+            "Arn": Object {
+              "Fn::GetAtt": Array [
+                "LambdaTriggerTranscodingFunction87B300ED",
+                "Arn",
+              ],
+            },
+            "Id": "Target0",
+          },
+        ],
+      },
+      "Type": "AWS::Events::Rule",
+    },
+    "LambdaSourceBucketTriggerAllowEventRuletestLambdaTriggerTranscodingFunctionF86D17316332B4BF": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "LambdaTriggerTranscodingFunction87B300ED",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "LambdaSourceBucketTrigger6C3DDFBE",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "LambdaTriggerTranscodingFunction87B300ED": Object {
+      "DependsOn": Array [
+        "LambdaTriggerTranscodingFunctionServiceRoleDefaultPolicyD96D307E",
+        "LambdaTriggerTranscodingFunctionServiceRoleCEB54003",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "76fa14b8e6db8d92b9496660f666eb7d2a27a74471ff66faf9071bb3205b2c7f.zip",
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "MEDIA_CONVERT_ROLE_ARN": Object {
+              "Fn::GetAtt": Array [
+                "LambdaMediaConvertRole796170D0",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "LambdaTriggerTranscodingFunctionServiceRoleCEB54003",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "LambdaTriggerTranscodingFunctionServiceRoleCEB54003": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "LambdaTriggerTranscodingFunctionServiceRoleDefaultPolicyD96D307E": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "mediaconvert:DescribeEndpoints",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":mediaconvert:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":endpoints/*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "mediaconvert:CreateJob",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":mediaconvert:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":queues/Default",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "iam:PassRole",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "LambdaMediaConvertRole796170D0",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "LambdaTriggerTranscodingFunctionServiceRoleDefaultPolicyD96D307E",
+        "Roles": Array [
+          Object {
+            "Ref": "LambdaTriggerTranscodingFunctionServiceRoleCEB54003",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "MediaA721A567": Object {
+      "DeletionPolicy": "Retain",
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+  },
   "Rules": Object {
     "CheckBootstrapVersion": Object {
       "Assertions": Array [

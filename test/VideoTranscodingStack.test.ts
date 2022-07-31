@@ -4,7 +4,7 @@ import { VideoTranscodingStack } from '../src/stacks/VideoTranscodingStack';
 
 test('Snapshot', () => {
   const app = new App();
-  const stack = new VideoTranscodingStack(app, 'test');
+  const stack = new VideoTranscodingStack(app, 'test', {});
   const assert = Template.fromStack(stack);
   expect(assert.toJSON()).toMatchSnapshot();
 });

@@ -56,6 +56,7 @@ const updateOutputSettings = function (jobSettings: any, destinationS3: string) 
 
 exports.handler = async (event: any) => {
   console.log('event: ', JSON.stringify(event, null, 2));
+  return;
   configurationSanityCheck();
 
   const application = 'ignite';

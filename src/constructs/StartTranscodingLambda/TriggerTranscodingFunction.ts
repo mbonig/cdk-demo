@@ -1,4 +1,5 @@
 import { Stack } from 'aws-cdk-lib';
+import { Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Rule } from 'aws-cdk-lib/aws-events';
 import { LambdaFunction } from 'aws-cdk-lib/aws-events-targets';
 import { Effect, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
@@ -25,6 +26,9 @@ export class StartTranscodingLambda extends Construct {
       environment: {
         MEDIA_CONVERT_ROLE_ARN: mediaConvertRole.roleArn,
       },
+      vpc: Vpc.fromLookup(this, 'Vpc', {
+        vpcId: 'asdfasdfsadf',
+      }),
     });
 
     triggerFunction.addToRolePolicy(new PolicyStatement({
